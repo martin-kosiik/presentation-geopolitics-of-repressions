@@ -1,0 +1,467 @@
+\documentclass[11pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\usepackage[
+    backend=biber,
+    style=authoryear,
+    natbib=true,
+  %  firstinits=true, % render first and middle names as initials
+   % sortlocale=en_US,
+    url=true, 
+    doi=true,
+    eprint=false,
+    dashed=false, % re-print recurring author names in bibliography
+   % issn=false,
+    isbn=false,
+    maxcitenames=2,
+    maxbibnames=99,
+    uniquelist=false
+]{biblatex}
+%\DeclareLanguageMapping{english}{english-apa}
+
+\renewcommand*{\bibinitdelim}{}
+
+\DeclareBibliographyCategory{needsurl}
+\newcommand{\entryneedsurl}[1]{\addtocategory{needsurl}{#1}}
+\renewbibmacro*{url+urldate}{%
+  \ifcategory{needsurl}
+    {\printfield{url}%
+     \iffieldundef{urlyear}
+       {}
+       {\setunit*{\addspace}%
+        \printurldate}}
+    {}}
+
+
+\usepackage{xpatch}
+\xapptobibmacro{date+extrayear}{\nopunct}{}{}
+
+% Use single quotes around titles:
+\usepackage[british]{babel}
+\usepackage[autostyle]{csquotes}
+
+\DeclareNameAlias{author}{last-first}
+\renewcommand*{\mkbibnamefirst}[1]{{\let~\,#1}} % insert thin spaces between author initials
+\renewcommand*{\nameyeardelim}{\addcomma\addspace} % insert a comma between author and year in-text citations
+\renewcommand*{\newunitpunct}{\addcomma\addspace} % comma as separator in bibliography, not full stop
+\setlength\bibitemsep{1.5\itemsep} % increase spacing between entries in bibliography
+\renewbibmacro{in:}{} % remove 'in:' preceding article title
+
+% Place volume number within parentheses:
+\renewbibmacro*{volume+number+eid}{
+    \printfield{volume}
+    \setunit*{\addnbspace}% NEW (optional); there's also \addnbthinspace
+    \printfield{number}
+    \setunit{\addcomma\space}
+    \printfield{eid}}
+\DeclareFieldFormat[article]{number}{\mkbibparens{#1}}
+
+
+
+
+\AtEveryBibitem{%
+  \clearlist{language}%
+}
+\addbibresource{references.bib}
+
+
+
+\title{The Geopolitics of Repressions}
+%\subtitle{A modern beamer theme}
+% \date{\today}
+\date{\today}
+\author{Martin Kosík}
+\institute{Charles University}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{itemize items}[circle]
+%\setbeamertemplate{itemize subitems}[triangle]
+\metroset{sectionpage=none}
+
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+\begin{frame}{Content}
+\tableofcontents
+\end{frame}
+
+
+\section{Motivation}
+\begin{frame}{Motivation}
+\begin{itemize}
+    \item What determines attitude of a state toward its ethnic minorities? 
+    \item  Why are some ethnic minorities accommodated in some cases but persecuted in other
+     \item Example: Soviet campaigns of mass terror against ethnic minorities in the 1930s, in contrast to \emph{korenizatsiya} policy  of the 1920s
+
+\end{itemize}
+\end{frame}
+\section{Literature Review}
+\begin{frame}{Literature Review}
+% \begin{block}{Literature on repressions}
+ %  {
+        \begin{itemize}
+        \item Role of institutions and economic shocks 
+        \item Cultural distance, legibility of an ethnic group
+        \item Precedent setting (number of ethnic groups)
+        \item
+        \end{itemize}
+%    }
+ %   \end{block}
+
+\end{frame}
+\section{Research Question}
+\begin{frame}{Research Question}
+\begin{itemize}
+    \item What impact do geopolitical relations have?
+    \item According to \citet{mylonas_politics_2013}, ethnic minorities with ties to hostile foreign power are more likely to be repressed
+    
+\end{itemize}
+\end{frame}
+
+\section{Historical Background}
+\begin{frame}{Historical Background}
+ \begin{block}{Main phases in Soviet-German Relations}
+    {
+        \begin{itemize}
+        \item Neutrality (1921-1933) 
+        \item Hostilities (1933-1939)
+        \item Pact (1939-1941)
+        \item War (1941-1945)
+        \item Post-war period (after 1945)
+        \end{itemize}
+    }
+    \end{block}
+\end{frame}
+
+\section{Data}
+\begin{frame}[label=data]{Data}
+\begin{itemize}
+    \item Data on Soviet repressions come from database of Russian NGO  Memorial
+    \item More than 2 million records
+    \item Large fraction of observations with missing ethnicity and date of arrest 
+    \begin{itemize}
+        \item Imputation of ethnicity based on names using Naive Bayes  classifier  \hyperlink{ethnicity_imputation}{\beamergotobutton{more}}
+        \item Imputation of date of arrest based on date of trial \hyperlink{arrest_date_imputation}{\beamergotobutton{more}}
+    \end{itemize}
+    
+\end{itemize}
+\end{frame}
+
+\section{Methodology}
+\begin{frame}{Difference-in-differences}
+\begin{itemize}
+    \item Dynamic difference-in-differences model with unit and time fixed effects
+  %  \item $\text{Relations}_{it}$ - controls for changes in geopolitical controls 
+    \item Identifying assumption - parallel trends 
+    \begin{itemize}
+        \item $\beta_k$ for $k < 1933$ can help assess its plausibility
+    \end{itemize}
+\end{itemize}
+
+\begin{equation*}
+ \log\left(1 + y_{it}\right) = \sum_{k= 1922}^{1960} \textcolor{red}{\beta_k}  \, \text{German}_{i} \cdot \text{Year}_{t}^k +  \lambda_t + a_i +  \text{Relations}_{it}   + u_{it}
+ \label{eq:dynamic_did}
+\end{equation*}
+\end{frame}
+
+\begin{frame}{Synthetic Control Method}
+\begin{itemize}
+    %\item  Synthetic version of the treated unit is constructed from the control units based on matching of pre-treatment variables
+    \item Synthetic version of the treated unit is constructed as a convex combination of control units based on matching of pre-treatment variables
+    \item The treatment effect is estimated as a difference between the actual
+    values and the synthetic control
+    \item Significance is assessed with placebo tests and randomization inference
+    %\item Formally,  a vector of weights $W = (w_2, \dots, w_J, w_{J+1})$ subject to $w_j \geq 0$ for $j = 2, \dots, J, J + 1$ and $w_2 +  \dots + w_J + w_{J+1} = 1$ is chosen to minimize $\left\Vert X_1 - X_0 W \right\Vert_V = \sqrt{\left(X_1 - X_0 W\right)^T V \left(X_1 - X_0 W\right)}$
+\end{itemize}
+\end{frame}
+{
+\metroset{sectionpage=progressbar}
+\section{Results}
+}
+\begin{frame}{Difference-in-differences}
+ \begin{figure}[h]
+\centering
+%\caption{Estimates of $\beta_k$ from Specification \ref{eq:dynamic_did}}
+\includegraphics[width=\textwidth]{fmla_pred_full_imp_date_no_trends_geopol_cr2.pdf}
+%\begin{minipage}{12\textwidth}
+%\footnotesize
+%\emph{Notes:} Ethnicity and date of arrest were imputed.  Full matrix adjustment was applied on ethnic group imputations. All 38 ethnic groups are included. There are no ethnicity-specific time trends. Standard errors are clustered on the level of ethnicity and are based on cluster robust estimator by \citet{pustejovsky_small-sample_2018}. Error bars show 95\% confidence intervals. 
+%\end{minipage}
+\label{fig:did_effets}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Synthetic control method}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{comparison_plot_scaled.pdf}
+%\begin{minipage}{0.92\textwidth}
+%\includegraphics[width=\linewidth]{Gaus.pdf}
+%\rule{\linewidth}{10em}
+%\footnotesize
+%\emph{Notes:} The values on y-axis are shown on $\log\left(1 + y\right)$ scale.  Ethnicity and date of arrest were imputed.  Full matrix adjustment was applied on ethnic group imputations. All 38 ethnic groups are included. 
+%\end{minipage}
+\label{fig:sc_comp_plot}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}{Synthetic control method}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{placebo_highlight_all_imp_date.pdf}
+\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label=robustness_checks]{Difference-in-differences - Robustness Checks}
+%\begin{itemize}
+%    \item  Difference-in-differences
+    \begin{itemize}
+        \item Only ethnic groups without independent state \hyperlink{did_without_ind_state}{\beamergotobutton{here}}
+        \item Only rehabilitated individuals \hyperlink{did_rehabs}{\beamergotobutton{here}}
+        \item Only arrests from 250 km border frontier \hyperlink{did_border_area}{\beamergotobutton{here}}
+        \item Only arrests outside 250 km border frontier \hyperlink{did_non_border_area}{\beamergotobutton{here}}
+        \item Ethnicity-specific time trends  \hyperlink{did_time_trends}{\beamergotobutton{here}}
+        \item Different ethnicity imputation adjustments (none, parsimonious, full matrix)   \hyperlink{did_pred_adj}{\beamergotobutton{here}}
+        \item Stata standard errors  \hyperlink{did_stata_se}{\beamergotobutton{here}}
+        \item Different base years 
+        \begin{itemize}
+            \item The whole pre-treatment period (1921-1932) omitted \hyperlink{did_from_1933}{\beamergotobutton{here}}
+            \item Years 1921-1926 omitted \hyperlink{did_from_1927}{\beamergotobutton{here}}
+        \end{itemize}
+
+    \end{itemize}
+%\end{itemize}
+\end{frame}
+
+\begin{frame}[label=sc_robustness_checks]{Synthetic Control - Robustness Checks}
+%\begin{itemize}
+%    \item  Difference-in-differences
+ \begin{itemize}
+    \item Mean of the outcome used as a predictor (instead of all pre-treatment outcomes) \hyperlink{sc_mean}{\beamergotobutton{here}}
+        \item Only ethnic groups without independent state \hyperlink{sc_without_ind_state}{\beamergotobutton{here}}
+        \item Only rehabilitated individuals \hyperlink{sc_rehabs}{\beamergotobutton{here}}
+        \item Only arrests from 250 km border frontier \hyperlink{sc_border_area}{\beamergotobutton{here}}
+        \item Only arrests outside 250 km border frontier \hyperlink{sc_non_border_area}{\beamergotobutton{here}}
+       % \item Ethnicity-specific time trends  \hyperlink{did_time_trends}{\beamergotobutton{here}}
+        %\item Different ethnicity imputation adjustments (none, parsimonious, full matrix)   \hyperlink{did_pred_adj}{\beamergotobutton{here}}
+        %\item Stata standard errors  \hyperlink{did_stata_se}{\beamergotobutton{here}}
+        %\item Different base years  \hyperlink{did_stata_se}{\beamergotobutton{here}}
+    \end{itemize}
+%\end{itemize}
+\end{frame}
+
+
+
+
+\section{Conclusion}
+
+\begin{frame}{Conclusion}
+\begin{itemize}
+    \item No
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+\printbibliography
+\end{frame}
+
+
+{\setbeamercolor{palette primary}{fg=black, bg=white}
+\begin{frame}[standout]
+  Thank you for your attention.
+\end{frame}
+}
+
+\appendix
+
+\begin{frame}{Replication}
+
+  Get the source of this theme and the demo presentation from
+
+  \begin{center}\url{https://github.com/martin-kosiik/Geopolitics-of-Repressions}\end{center}
+
+\end{frame}
+
+
+
+\begin{frame}[label=ethnicity_imputation]{Ethnicity imputation}
+\begin{itemize}
+    \item Let  $\boldsymbol{x} = \left(x_1, x_2, x_3\right)$ be person's first, last, and patronymic names
+    \item Naive Bayes classifier predicts ethnicity with the highest posterior probability
+
+\end{itemize}
+\hyperlink{data}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=arrest_date_imputation]{Imputation of date of arrest}
+
+\hyperlink{data}{\beamerreturnbutton{back}}
+\end{frame}
+
+
+
+\begin{frame}[label=did_without_ind_state]{DiD - Only Ethnicities without Independent State}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{pr_cr2_date_imp_full_years_no_trends_not_ind_country.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+
+\hyperlink{robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=did_rehabs]{DiD - Only Rehabilitated Individuals}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{fmla_pred_full_imp_date_no_trends_geopol_rehab_cr2.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=did_border_area]{DiD - Only arrests from Border Areas}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{point_range_robust_cr2_border_provinces.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=did_non_border_area]{DiD - Arrests from Border Areas Excluded}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{point_range_robust_cr2_non_border_provinces.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=did_time_trends]{DiD - Ethnicity-specific time trends}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{trends_comp_pred_full_imp_date_cr2.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=did_time_trends]{DiD - Different Ethnicity Imputation Adjustments}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{pred_adj_comp_pred_full_imp_date_cr2.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+
+\begin{frame}[label=did_stata_se]{DiD - Stata Standard Errors}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{fmla_pred_full_imp_date_no_trends_geopol_stata_SE.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=did_from_1927]{DiD - From 1927}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{pred_full_imp_date_no_trends_geopol_cr2_base_1927.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+
+\begin{frame}[label=did_from_1933]{DiD - From 1933}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{pred_full_imp_date_no_trends_geopol_cr2_base_1933.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+
+
+\begin{frame}[label=sc_mean]{SCM - Mean of the Outcome as a Predictor}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{placebo_highlight_all_imp_date_robustnes.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{sc_robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=sc_without_ind_state]{SCM - Only Ethnicities without Independent State}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{placebo_highlight_all_ethnicities_without_ind_state.pdf}
+\end{figure}
+\hyperlink{sc_robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=sc_rehabs]{SCM - Only Rehabilitated Individuals}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{placebo_highlight_all_rehabs.pdf}
+\end{figure}
+\hyperlink{sc_robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=sc_border_area]{SCM - Only Arrests from Border Areas}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{placebo_highlight_all_border_provinces.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{sc_robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=sc_non_border_area]{SCM - Arrests from Border Areas Excluded}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{placebo_highlight_all_non_border_provinces.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{sc_robustness_checks}{\beamerreturnbutton{back}}
+\end{frame}
+
+
+\end{document}
