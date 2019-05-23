@@ -3,11 +3,12 @@
 \usetheme[progressbar=frametitle]{metropolis}
 \usepackage{appendixnumberbeamer}
 
-\usepackage{booktabs}
+%\usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
 
 \usepackage{pgfplots}
 \usepgfplotslibrary{dateplot}
+%\usepackage[dvipsnames]{xcolor}
 
 \usepackage{xspace}
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
@@ -102,32 +103,66 @@
 
 \section{Motivation}
 \begin{frame}{Motivation}
+ \begin{block}{Soviet Union, 1920s -  accommodation of minorities}  {
 \begin{itemize}
-    \item What determines attitude of a state toward its ethnic minorities? 
-    \item  Why are some ethnic minorities accommodated in some cases but persecuted in other
-     \item Example: Soviet campaigns of mass terror against ethnic minorities in the 1930s, in contrast to \emph{korenizatsiya} policy  of the 1920s
-
-\end{itemize}
+    \item Autonomous Socialist Republics for ethnic minorities created
+    \item Elites from ethnic minorities  promoted to leadership positions
+    \item  The languages of the minorities declared as official languages of the given republics
+\end{itemize}}
+\end{block} 
 \end{frame}
+
+\begin{frame}{Motivation}
+ \begin{block}{Soviet Union, 1930s - repression}  {
+\begin{itemize}
+    \item Mass arrests and deportations targeted at ethnic minorities
+    \item  Over 240,000 people executed just in the NKVD's National Campaigns of 1937-1938 alone \citep[p. 855]{martin_origins_1998}
+    %335,513 people arrested (out of which 247,157 were executed) just in the NKVD's National Campaigns of 1937-1938 alone \citep[p. 855]{martin_origins_1998}
+\end{itemize}}
+\end{block} 
+
+\metroset{block=fill}
+%\metroset{block=fill}
+\end{frame}
+
+\begin{frame}{Motivation}
+\begin{itemize}
+    \item What caused this sharp reversal in Soviet policy towards its minorities?
+    \item Why are ethnic minorities repressed in some cases and accommodated in others?
+\end{itemize}
+
+\end{frame}
+
+
+%\begin{frame}{Motivation}\begin{itemize}    \item What determines attitude of a state toward its ethnic minorities?   \item  Why are some ethnic minorities accommodated in some cases but persecuted in other   \item Example: Soviet campaigns of mass terror against ethnic minorities in the 1930s, in contrast to \emph{korenizatsiya} policy  of the 1920s \end{itemize} \end{frame}
+
 \section{Literature Review}
 \begin{frame}{Literature Review}
 % \begin{block}{Literature on repressions}
  %  {
         \begin{itemize}
-        \item Role of institutions and economic shocks 
-        \item Cultural distance, legibility of an ethnic group
-        \item Precedent setting (number of ethnic groups)
-        \item
+        \item Role of institutions \citep{davenport_state_2007} and economic shocks \citep{blaydes_state_2018}
+        \item Cultural distance, legibility of an ethnic group \citep{blaydes_state_2018}
+        \item States with many ethnic groups more likely to repress demands for autonomy due to precedent setting \citep{evera_hypotheses_1994, toft_geography_2005, walter_reputation_2009}
+       % \item
         \end{itemize}
 %    }
  %   \end{block}
 
 \end{frame}
-\section{Research Question}
-\begin{frame}{Research Question}
+\section{Theoretical Expectations}
+\begin{frame}{Theoretical Expectations}
 \begin{itemize}
-    \item What impact do geopolitical relations have?
-    \item According to \citet{mylonas_politics_2013}, ethnic minorities with ties to hostile foreign power are more likely to be repressed
+    %\item What impact do geopolitical relations have?
+    \item According to \citet{mylonas_politics_2013}, international relations play important role 
+    \item If a minority has ethnic ties to an external power
+     which is  
+    \begin{itemize}
+        \item an \textcolor{blue}{ally}  to the host state, repression is \textcolor{blue}{less} likely since that could jeopardize the alliance
+        \item an \textcolor{red}{enemy}, repression is \textcolor{red}{more}  likely because the minority is viewed as a potential \enquote{fifth column}
+
+    \end{itemize}
+    %ethnic minorities with ties to hostile foreign power are more likely to be repressed
     
 \end{itemize}
 \end{frame}
@@ -151,7 +186,7 @@
 \begin{frame}[label=data]{Data}
 \begin{itemize}
     \item Data on Soviet repressions come from database of Russian NGO  Memorial
-    \item More than 2 million records
+    \item More than 2 million records of individual arrests by the Soviet secret police mostly from archival sources
     \item Large fraction of observations with missing ethnicity and date of arrest 
     \begin{itemize}
         \item Imputation of ethnicity based on names using Naive Bayes  classifier  \hyperlink{ethnicity_imputation}{\beamergotobutton{more}}
@@ -205,7 +240,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}{Synthetic control method}
+\begin{frame}{Synthetic Control Method}
  \begin{figure}[h]
 \centering
 %\caption{Comparison plot}
@@ -222,7 +257,7 @@
 
 
 
-\begin{frame}{Synthetic control method}
+\begin{frame}{Synthetic Control Method}
  \begin{figure}[h]
 \centering
 %\caption{Comparison plot}
@@ -230,6 +265,27 @@
 \label{fig:sc_placebo_gaps_all}
 \end{figure}
 \end{frame}
+
+\begin{frame}{SC - MSPE Ratios}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{mspe_ratios_imp_date.pdf}
+\label{fig:mspe_ratios_imp_date}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}{SC - MSPE Ratios - Only 1933-1939 in Numerator}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{mspe_ratios_imp_date_until_1939.pdf}
+\label{fig:mspe_ratios_imp_date_until_1939}
+\end{figure}
+\end{frame}
+
 
 \begin{frame}[label=robustness_checks]{Difference-in-differences - Robustness Checks}
 %\begin{itemize}
@@ -270,19 +326,19 @@
 \end{frame}
 
 
-
-
 \section{Conclusion}
 
 \begin{frame}{Conclusion}
 \begin{itemize}
-    \item No
+    \item 
+    \item Large and significant increase in repressions with war
+    \item Strong persistence of the effect of war (nearly 10 years)
+    \begin{itemize}
+        \item This might suggest that strategic concerns are less important 
+    \end{itemize}
+    \item Not limited to border frontiers (contrary to \citet{mcnamee_demographic_2019})
 \end{itemize}
 
-\end{frame}
-
-\begin{frame}[allowframebreaks]{References}
-\printbibliography
 \end{frame}
 
 
@@ -294,12 +350,16 @@
 
 \appendix
 
+\begin{frame}[allowframebreaks]{References}
+\printbibliography
+\end{frame}
+
 \begin{frame}{Replication}
-
-  Get the source of this theme and the demo presentation from
-
+The R scripts and the LaTeX source codes of the thesis manuscript are available at:
   \begin{center}\url{https://github.com/martin-kosiik/Geopolitics-of-Repressions}\end{center}
 
+The Beamer source code for this presentation itself are available at: 
+\begin{center}\url{https://github.com/martin-kosiik/presentation-geopolitics-of-repressions}\end{center}
 \end{frame}
 
 
@@ -307,14 +367,29 @@
 \begin{frame}[label=ethnicity_imputation]{Ethnicity imputation}
 \begin{itemize}
     \item Let  $\boldsymbol{x} = \left(x_1, x_2, x_3\right)$ be person's first, last, and patronymic names
-    \item Naive Bayes classifier predicts ethnicity with the highest posterior probability
+    \item Assuming conditional independence, we can express probability that a person has ethnicity $E_k$ given his names as:
+    \begin{equation*}
+p(E_k \mid \mathbf{x}) = \frac{p(E_k) \ p(\mathbf{x} \mid E_k)}{p(\mathbf{x})}
+\end{equation*}
+    \item Naive Bayes classifier chooses ethnicity with the highest posterior probability as its prediction
 
 \end{itemize}
 \hyperlink{data}{\beamerreturnbutton{back}}
 \end{frame}
 
-\begin{frame}[label=arrest_date_imputation]{Imputation of date of arrest}
-
+\begin{frame}[label=arrest_date_imputation]{Imputing Missing Date of Arrest}
+\begin{itemize}
+    \item Date of arrest is missing for 1 650 912 observations 
+    \begin{itemize}
+        \item For 903 49 of them, date of trial is available - we use it for imputation
+    \end{itemize}
+    \item We model number of days between date of arrest and trial ($y$) in two-stages:
+    \begin{enumerate}
+        \item Logit to predict whether $y = 0$ (arrest and trial happening on the same day)
+        \item  Log-linear regression on the subset of the data for which $y > 0$ 
+    \end{enumerate}
+    %\item The predicted (imputed) value is $\hat y_i = \hat I_i^y \cdot \hat y_i^{\text{pos}}$
+\end{itemize}
 \hyperlink{data}{\beamerreturnbutton{back}}
 \end{frame}
 
@@ -371,7 +446,7 @@
 \hyperlink{robustness_checks}{\beamerreturnbutton{back}}
 \end{frame}
 
-\begin{frame}[label=did_time_trends]{DiD - Different Ethnicity Imputation Adjustments}
+\begin{frame}[label=did_pred_adj]{DiD - Different Ethnicity Imputation Adjustments}
  \begin{figure}[h]
 \centering
 %\caption{Comparison plot}
