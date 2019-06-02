@@ -96,7 +96,7 @@
 \begin{frame}
 \titlepage
 \end{frame}
-\begin{frame}{Content}
+\begin{frame}{Outline}
 \tableofcontents
 \end{frame}
 
@@ -105,9 +105,9 @@
 \begin{frame}{Motivation}
  \begin{block}{Soviet Union, 1920s -  accommodation of minorities}  {
 \begin{itemize}
-    \item Autonomous Socialist Republics for ethnic minorities created
-    \item Elites from ethnic minorities  promoted to leadership positions
-    \item  The languages of the minorities declared as official languages of the given republics
+    %\item Autonomous Socialist Republics for ethnic minorities created
+    \item Individuals from ethnic minorities  promoted to leadership positions 
+    \item  The languages and culture of the minorities supported \citep{martin_affirmative_2001}
 \end{itemize}}
 \end{block} 
 \end{frame}
@@ -128,7 +128,8 @@
 \begin{frame}{Motivation}
 \begin{itemize}
     \item What caused this sharp reversal in Soviet policy towards its minorities?
-    \item Why are ethnic minorities repressed in some cases and accommodated in others?
+    %\item Why are ethnic minorities repressed in some cases and accommodated in other cases?
+    \item Why states sometimes choose to accommodate or assimilate its ethnic minorities but repress them in other cases?
 \end{itemize}
 
 \end{frame}
@@ -154,7 +155,7 @@
 \begin{frame}{Theoretical Expectations}
 \begin{itemize}
     %\item What impact do geopolitical relations have?
-    \item According to \citet{mylonas_politics_2013}, international relations play important role 
+    \item  \citet{mylonas_politics_2013, butt_secession_2017} highlight importance of geopolitical factors 
     \item If a minority has ethnic ties to an external power
      which is  
     \begin{itemize}
@@ -187,6 +188,8 @@
 \begin{itemize}
     \item Data on Soviet repressions come from database of Russian NGO  Memorial
     \item More than 2 million records of individual arrests by the Soviet secret police mostly from archival sources
+    %\item Main dataset created by counting number of arrests for each ethnic group in given year (from 1921 to 1960)
+    \item 38 ethnic groups, years from 1921 to 1960
     \item Large fraction of observations with missing ethnicity and date of arrest 
     \begin{itemize}
         \item Imputation of ethnicity based on names using Naive Bayes  classifier  \hyperlink{ethnicity_imputation}{\beamergotobutton{more}}
@@ -199,7 +202,7 @@
 \section{Methodology}
 \begin{frame}{Difference-in-differences}
 \begin{itemize}
-    \item Dynamic difference-in-differences model with unit and time fixed effects
+    \item Dynamic difference-in-differences model with ethnicity and year fixed effects
   %  \item $\text{Relations}_{it}$ - controls for changes in geopolitical controls 
     \item Identifying assumption - parallel trends 
     \begin{itemize}
@@ -216,9 +219,9 @@
 \begin{frame}{Synthetic Control Method}
 \begin{itemize}
     %\item  Synthetic version of the treated unit is constructed from the control units based on matching of pre-treatment variables
-    \item Synthetic version of the treated unit is constructed as a convex combination of control units based on matching of pre-treatment variables
+    \item Synthetic German minority is constructed as a convex combination of control ethnic groups based on matching of pre-treatment arrests and other covariates
     \item The treatment effect is estimated as a difference between the actual
-    values and the synthetic control
+     values and the synthetic control
     \item Significance is assessed with placebo tests and randomization inference
     %\item Formally,  a vector of weights $W = (w_2, \dots, w_J, w_{J+1})$ subject to $w_j \geq 0$ for $j = 2, \dots, J, J + 1$ and $w_2 +  \dots + w_J + w_{J+1} = 1$ is chosen to minimize $\left\Vert X_1 - X_0 W \right\Vert_V = \sqrt{\left(X_1 - X_0 W\right)^T V \left(X_1 - X_0 W\right)}$
 \end{itemize}
@@ -240,20 +243,18 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}{Synthetic Control Method}
- \begin{figure}[h]
-\centering
+
+%\begin{frame}{Synthetic Control Method}  \begin{figure}[h] \centering
 %\caption{Comparison plot}
-\includegraphics[width=1\textwidth]{comparison_plot_scaled.pdf}
+%\includegraphics[width=1\textwidth]{comparison_plot_scaled.pdf}
 %\begin{minipage}{0.92\textwidth}
 %\includegraphics[width=\linewidth]{Gaus.pdf}
 %\rule{\linewidth}{10em}
 %\footnotesize
 %\emph{Notes:} The values on y-axis are shown on $\log\left(1 + y\right)$ scale.  Ethnicity and date of arrest were imputed.  Full matrix adjustment was applied on ethnic group imputations. All 38 ethnic groups are included. 
-%\end{minipage}
-\label{fig:sc_comp_plot}
-\end{figure}
-\end{frame}
+%\end{minipage} 
+%\label{fig:sc_comp_plot} \end{figure} \end{frame}
+
 
 
 
@@ -266,26 +267,11 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}{SC - MSPE Ratios}
- \begin{figure}[h]
-\centering
-%\caption{Comparison plot}
-\includegraphics[width=1\textwidth]{mspe_ratios_imp_date.pdf}
-\label{fig:mspe_ratios_imp_date}
-\end{figure}
-\end{frame}
+%\begin{frame}{SC - MSPE Ratios} \begin{figure}[h] \centering \includegraphics[width=1\textwidth]{mspe_ratios_imp_date.pdf} \label{fig:mspe_ratios_imp_date} \end{figure} \end{frame}
 
 
 
-\begin{frame}{SC - MSPE Ratios - Only 1933-1939 in Numerator}
- \begin{figure}[h]
-\centering
-%\caption{Comparison plot}
-\includegraphics[width=1\textwidth]{mspe_ratios_imp_date_until_1939.pdf}
-\label{fig:mspe_ratios_imp_date_until_1939}
-\end{figure}
-\end{frame}
-
+%\begin{frame}{SC - MSPE Ratios - Only 1933-1939 in Numerator}  \begin{figure}[h] \centering \includegraphics[width=1\textwidth]{mspe_ratios_imp_date_until_1939.pdf} \label{fig:mspe_ratios_imp_date_until_1939} \end{figure} \end{frame}
 
 \begin{frame}[label=robustness_checks]{Difference-in-differences - Robustness Checks}
 %\begin{itemize}
@@ -307,6 +293,8 @@
     \end{itemize}
 %\end{itemize}
 \end{frame}
+
+
 
 \begin{frame}[label=sc_robustness_checks]{Synthetic Control - Robustness Checks}
 %\begin{itemize}
@@ -330,11 +318,11 @@
 
 \begin{frame}{Conclusion}
 \begin{itemize}
-    \item 
+   % \item 
     \item Large and significant increase in repressions with war
     \item Strong persistence of the effect of war (nearly 10 years)
     \begin{itemize}
-        \item This might suggest that strategic concerns are less important 
+        \item This might suggest that strategic concerns are less important than desire for collective punishment 
     \end{itemize}
     \item Not limited to border frontiers (contrary to \citet{mcnamee_demographic_2019})
 \end{itemize}
@@ -353,6 +341,14 @@
 \begin{frame}[allowframebreaks]{References}
 \printbibliography
 \end{frame}
+
+\begin{frame}[label=add_content]{Additional Analyses}
+\begin{itemize}
+    \item No date of arrest imputation
+    \item Map of German population in the USSR 
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}{Replication}
 The R scripts and the LaTeX source codes of the thesis manuscript are available at:
@@ -538,5 +534,29 @@ p(E_k \mid \mathbf{x}) = \frac{p(E_k) \ p(\mathbf{x} \mid E_k)}{p(\mathbf{x})}
 \hyperlink{sc_robustness_checks}{\beamerreturnbutton{back}}
 \end{frame}
 
+
+
+
+
+
+\begin{frame}[label=map_counts]{Map of German population in the USSR}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{map_number_of_germans_discrete.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{add_content}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=map_share]{Map of German population in the USSR}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{map_share_of_germans_discrete.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{add_content}{\beamerreturnbutton{back}}
+\end{frame}
 
 \end{document}
