@@ -81,7 +81,7 @@
 \title{The Geopolitics of Repressions}
 %\subtitle{A modern beamer theme}
 % \date{\today}
-\date{\today}
+\date{June 11, 2019}
 \author{Martin Kosík}
 \institute{Charles University}
 % \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
@@ -344,8 +344,20 @@
 
 \begin{frame}[label=add_content]{Additional Analyses}
 \begin{itemize}
-    \item No date of arrest imputation
-    \item Map of German population in the USSR 
+    \item Map of German population in the USSR \hyperlink{map_counts}{\beamergotobutton{here}}
+    \item No imputation of date of arrest
+    \hyperlink{did_no_date_imputation}{\beamergotobutton{DiD}} 
+    \hyperlink{sc_no_date_imputation}{\beamergotobutton{SCM}} 
+    \item Considering only western border areas 
+    \begin{itemize}
+        \item   Only arrests from western border areas 
+        \hyperlink{did_border_area_west}{\beamergotobutton{DiD}} 
+      \hyperlink{sc_border_area_west}{\beamergotobutton{SCM}} 
+        \item Arrests from western border areas excluded
+         \hyperlink{did_non_border_area_west}{\beamergotobutton{DiD}} 
+      \hyperlink{sc_non_border_area_west}{\beamergotobutton{SCM}} 
+        
+    \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -422,6 +434,17 @@ p(E_k \mid \mathbf{x}) = \frac{p(E_k) \ p(\mathbf{x} \mid E_k)}{p(\mathbf{x})}
 \hyperlink{robustness_checks}{\beamerreturnbutton{back}}
 \end{frame}
 
+
+\begin{frame}[label=did_border_area_west]{DiD - Only arrests from Western Border Areas}
+ \begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{point_range_robust_cr2_border_provinces_western.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{add_content}{\beamerreturnbutton{back}}
+\end{frame}
+
+
 \begin{frame}[label=did_non_border_area]{DiD - Arrests from Border Areas Excluded}
  \begin{figure}[h]
 \centering
@@ -431,6 +454,18 @@ p(E_k \mid \mathbf{x}) = \frac{p(E_k) \ p(\mathbf{x} \mid E_k)}{p(\mathbf{x})}
 \end{figure}
 \hyperlink{robustness_checks}{\beamerreturnbutton{back}}
 \end{frame}
+
+
+\begin{frame}[label=did_non_border_area_west]{DiD - Arrests from Western Border Areas Excluded}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{point_range_robust_cr2_non_border_provinces_western.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{add_content}{\beamerreturnbutton{back}}
+\end{frame}
+
 
 \begin{frame}[label=did_time_trends]{DiD - Ethnicity-specific time trends}
  \begin{figure}[h]
@@ -524,6 +559,16 @@ p(E_k \mid \mathbf{x}) = \frac{p(E_k) \ p(\mathbf{x} \mid E_k)}{p(\mathbf{x})}
 \hyperlink{sc_robustness_checks}{\beamerreturnbutton{back}}
 \end{frame}
 
+\begin{frame}[label=sc_border_area_west]{SCM - Only Arrests from Western Border Areas}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{placebo_highlight_all_border_provinces_western.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{add_content}{\beamerreturnbutton{back}}
+\end{frame}
+
 \begin{frame}[label=sc_non_border_area]{SCM - Arrests from Border Areas Excluded}
  \begin{figure}[h]
 \centering
@@ -535,8 +580,35 @@ p(E_k \mid \mathbf{x}) = \frac{p(E_k) \ p(\mathbf{x} \mid E_k)}{p(\mathbf{x})}
 \end{frame}
 
 
+\begin{frame}[label=sc_non_border_area_west]{SCM - Arrests from Western Border Areas Excluded}
+ \begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{placebo_highlight_all_non_border_provinces_western.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{add_content}{\beamerreturnbutton{back}}
+\end{frame}
 
 
+\begin{frame}[label=did_no_date_imputation]{DiD - No Imputations of Arrest Date}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{pr_cr2_fmla_pred_full_no_trends_geopol.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{add_content}{\beamerreturnbutton{back}}
+\end{frame}
+
+\begin{frame}[label=sc_no_date_imputation]{SCM - No Imputations of Arrest Date}
+ \begin{figure}[h]
+\centering
+%\caption{Comparison plot}
+\includegraphics[width=1\textwidth]{placebo_highlight_all_no_date_imputation.pdf}
+%\label{fig:sc_placebo_gaps_all}
+\end{figure}
+\hyperlink{add_content}{\beamerreturnbutton{back}}
+\end{frame}
 
 
 \begin{frame}[label=map_counts]{Map of German population in the USSR}
