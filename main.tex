@@ -1,7 +1,12 @@
 \documentclass[11pt]{beamer}
 
-\usetheme[progressbar=frametitle]{metropolis}
+\usetheme[progressbar=frametitle,block=fill]{metropolis}
 \usepackage{appendixnumberbeamer}
+
+%\usepackage[T1]{fontenc}
+\usefonttheme[onlymath]{serif}
+%\renewcommand\sfdefault{cmbr}
+
 
 %\usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
@@ -103,11 +108,11 @@
 
 \section{Motivation}
 \begin{frame}{Motivation}
- \begin{block}{Soviet Union, 1920s -  accommodation of minorities}  {
+ \begin{block}{Soviet Union, 1920s -  inclusion of minorities}  {
 \begin{itemize}
     %\item Autonomous Socialist Republics for ethnic minorities created
     \item Individuals from ethnic minorities  promoted to leadership positions 
-    \item  The languages and culture of the minorities supported \citep{martin_affirmative_2001}
+    \item  The languages and culture of minorities supported \citep{martin_affirmative_2001}
 \end{itemize}}
 \end{block} 
 \end{frame}
@@ -170,12 +175,16 @@
 
 \section{Historical Background}
 \begin{frame}{Historical Background}
- \begin{block}{Main phases in Soviet-German Relations}
+\begin{itemize}
+    \item We test these hypotheses on the case of German minority in the USSR
+\end{itemize}
+
+ \begin{block}{Main phases in Soviet-German relations}
     {
         \begin{itemize}
         \item Neutrality (1921-1933) 
         \item Hostilities (1933-1939)
-        \item Pact (1939-1941)
+        \item Non-aggression pact (1939-1941)
         \item War (1941-1945)
         \item Post-war period (after 1945)
         \end{itemize}
@@ -211,18 +220,22 @@
 \end{itemize}
 
 \begin{equation*}
- \log\left(1 + y_{it}\right) = \sum_{k= 1922}^{1960} \textcolor{red}{\beta_k}  \, \text{German}_{i} \cdot \text{Year}_{t}^k +  \lambda_t + a_i +  \text{Relations}_{it}   + u_{it}
+ \log\left(1 + y_{it}\right) = \sum_{k= 1922}^{1960} 
+ %\underbrace{
+ \textcolor{red}{\beta_k} \, \text{German}_{i} \cdot \text{Year}_{t}^k
+ % }_{\text{{Treatment effect}} }   
+ +  \lambda_t + a_i +  \text{Relations}_{it}   + u_{it}
  \label{eq:dynamic_did}
 \end{equation*}
 \end{frame}
 
 \begin{frame}{Synthetic Control Method}
 \begin{itemize}
-    %\item  Synthetic version of the treated unit is constructed from the control units based on matching of pre-treatment variables
-    \item Synthetic German minority is constructed as a convex combination of control ethnic groups based on matching of pre-treatment arrests and other covariates
+    \item  Synthetic version of the treated unit is constructed as a convex combination of the control units based on matching of pre-treatment outcomes and other covariates
+    %\item Synthetic German minority is constructed as a linear combination of control ethnic groups based on matching of pre-treatment arrests and other covariates
     \item The treatment effect is estimated as a difference between the actual
      values and the synthetic control
-    \item Significance is assessed with placebo tests and randomization inference
+    \item Significance is assessed with placebo tests (applying the same procedure to control units)
     %\item Formally,  a vector of weights $W = (w_2, \dots, w_J, w_{J+1})$ subject to $w_j \geq 0$ for $j = 2, \dots, J, J + 1$ and $w_2 +  \dots + w_J + w_{J+1} = 1$ is chosen to minimize $\left\Vert X_1 - X_0 W \right\Vert_V = \sqrt{\left(X_1 - X_0 W\right)^T V \left(X_1 - X_0 W\right)}$
 \end{itemize}
 \end{frame}
@@ -322,19 +335,23 @@
     \item Large and significant increase in repressions with war
     \item Strong persistence of the effect of war (nearly 10 years)
     \begin{itemize}
-        \item This might suggest that strategic concerns are less important than desire for collective punishment 
+        %\item This might suggest that strategic concerns are less important than desire for collective punishment 
+        \item Difficult to explain only by geopolitical concerns of the state
+        \item Consistent with desire for collective punishment of Germans for war
     \end{itemize}
-    \item Not limited to border frontiers (contrary to \citet{mcnamee_demographic_2019})
+    %\item Small positive effects of geopolitical hostility without war bordering on being statistically significant 
+    
+   % \item Not limited to border frontiers (contrary to \citet{mcnamee_demographic_2019})
 \end{itemize}
 
 \end{frame}
 
 
-{\setbeamercolor{palette primary}{fg=black, bg=white}
-\begin{frame}[standout]
-  Thank you for your attention.
-\end{frame}
-}
+%{\setbeamercolor{palette primary}{fg=black, bg=white}
+%\begin{frame}[standout]
+%  Thank you for your attention.
+%\end{frame}
+%}
 
 \appendix
 
@@ -385,6 +402,26 @@ p(E_k \mid \mathbf{x}) = \frac{p(E_k) \ p(\mathbf{x} \mid E_k)}{p(\mathbf{x})}
 \hyperlink{data}{\beamerreturnbutton{back}}
 \end{frame}
 
+\begin{frame}[label=ethnicity_imputation_adj]{Ethnicity Imputation Adjustments}
+\begin{itemize}
+    \item The accuracy of model's predictions differs substantially by ethnicity 
+    \item To address this, we apply  adjustments to the predictions
+    \begin{itemize}
+        \item Parsimonious: 
+        \begin{equation*}
+    P_{it} = \alpha_i R_{it} + \left( N_t - R_{it} \right) \cdot \left(1 - \beta_i \right)  
+\end{equation*}
+ \item Full (confusion) matrix:
+ \begin{equation*}
+P_{it}  = \sum_{j = 1}^{K} b_{ij} R_{jt} \qquad i = 1, \dots, K
+\end{equation*}
+    \end{itemize}
+    
+\end{itemize}
+\hyperlink{data}{\beamerreturnbutton{back}}
+\end{frame}
+
+
 \begin{frame}[label=arrest_date_imputation]{Imputing Missing Date of Arrest}
 \begin{itemize}
     \item Date of arrest is missing for 1 650 912 observations 
@@ -400,7 +437,6 @@ p(E_k \mid \mathbf{x}) = \frac{p(E_k) \ p(\mathbf{x} \mid E_k)}{p(\mathbf{x})}
 \end{itemize}
 \hyperlink{data}{\beamerreturnbutton{back}}
 \end{frame}
-
 
 
 \begin{frame}[label=did_without_ind_state]{DiD - Only Ethnicities without Independent State}
